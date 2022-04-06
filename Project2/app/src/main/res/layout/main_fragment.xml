@@ -31,6 +31,9 @@
         android:id="@+id/floatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="73dp"
+        android:clickable="true"
+        android:contentDescription="Add Button"
+        app:fabSize="auto"
         app:layout_anchor="@+id/bottomAppBar"
         app:layout_anchorGravity="top|center"
         app:srcCompat="@drawable/ic_baseline_add_circle_outline_24" />
