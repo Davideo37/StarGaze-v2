@@ -8,10 +8,6 @@ import android.view.ViewGroup
 import com.example.project2.R
 
 
-
-/**
- * A simple [Fragment] subclass.
- */
 class HomeFragment : Fragment() {
 
     override fun onCreateView(
