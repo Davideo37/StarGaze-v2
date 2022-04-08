@@ -2,6 +2,7 @@ package com.example.project2
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentController
@@ -24,15 +25,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
         replaceFragment(homeFragment)
-    }
-    fun basicAlert(view: View){
-        MaterialAlertDialogBuilder(view.context)
-            .setTitle("This is a test")
-            .setMessage("Here is some text")
-            .setNeutralButton("Cancel") {dialog, which ->{}}
-            .setPositiveButton("Ok") {dialog, which->{}}
-            .show()        
-
         bottomNavigationView.setOnItemSelectedListener { item ->
             when(item.itemId) {
                 R.id.message -> {
@@ -48,6 +40,16 @@ class MainActivity : AppCompatActivity() {
             true
         }
     }
+    fun basicAlert(view: View) {
+        MaterialAlertDialogBuilder(view.context)
+            .setTitle("This is a test")
+            .setMessage("Here is some text")
+            .setNeutralButton("Cancel") { dialog, which -> {} }
+            .setPositiveButton("Ok") { dialog, which -> {} }
+            .show()
+    }
+
+
     private fun replaceFragment(fragment: Fragment) {
             val transaction = supportFragmentManager.beginTransaction()
             transaction.replace(R.id.fragment_container, fragment)

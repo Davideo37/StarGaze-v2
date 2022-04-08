@@ -27,10 +27,7 @@ class MainFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        val FABbutton = viewModel.findViewById<FloatingActionButton>(R.id.floatingActionButton)
-        FABbutton.setOnClickListener(
-            {basicAlert(FABbutton)}
-        )
+
     }
 
 }
