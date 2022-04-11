@@ -1,19 +1,13 @@
 package com.example.project2
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.TextView
-import androidx.databinding.DataBindingUtil
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentController
-import com.example.project2.databinding.MainActivityBinding
 import com.example.project2.fragments.HomeFragment
 import com.example.project2.fragments.MessagesFragment
 import com.example.project2.fragments.SettingsFragment
-import com.example.project2.ui.main.MainFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.android.synthetic.main.main_activity.*
 
@@ -26,6 +20,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
+        try {
+            this.supportActionBar!!.hide()
+        } catch (e: NullPointerException) {
+        }
         replaceFragment(homeFragment)
 
         bottomNavigationView.setOnItemSelectedListener { item ->
