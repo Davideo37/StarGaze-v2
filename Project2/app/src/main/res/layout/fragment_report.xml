@@ -5,13 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/dark_blue"
-    tools:context=".fragments.MessagesFragment">
+    tools:context=".fragments.ReportFragment">
 
-    <TextView
-        android:id="@+id/ic_messages"
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/report_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Messages"
+        android:text="Report"
         android:textSize="36sp"
         android:translationY="225dp"
         app:layout_constraintBottom_toBottomOf="parent"

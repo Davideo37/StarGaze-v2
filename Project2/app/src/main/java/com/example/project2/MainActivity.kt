@@ -4,17 +4,15 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.example.project2.fragments.HomeFragment
-import com.example.project2.fragments.MessagesFragment
-import com.example.project2.fragments.SettingsFragment
+import com.example.project2.fragments.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.android.synthetic.main.main_activity.*
 
 class MainActivity : AppCompatActivity() {
-    private val messagesFragment = MessagesFragment()
+    private val forecastFragment = ForecastFragment()
     private val homeFragment = HomeFragment()
-    private val settingsFragment = SettingsFragment()
+    private val reportFragment = ReportFragment()
     private lateinit var text : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,11 +26,11 @@ class MainActivity : AppCompatActivity() {
 
         bottomNavigationView.setOnItemSelectedListener { item ->
             when(item.itemId) {
-                R.id.message -> {
-                    replaceFragment(messagesFragment)
+                R.id.forecast -> {
+                    replaceFragment(forecastFragment)
                 }
-                R.id.settings -> {
-                    replaceFragment(settingsFragment)
+                R.id.report -> {
+                    replaceFragment(reportFragment)
                 }
                 R.id.home -> {
                     replaceFragment(homeFragment)

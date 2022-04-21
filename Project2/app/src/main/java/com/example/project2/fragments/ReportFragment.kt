@@ -10,25 +10,20 @@ import com.google.android.material.slider.Slider
 import com.google.android.material.textview.MaterialTextView
 
 
-class SettingsFragment : Fragment() {
+class ReportFragment : Fragment() {
 
-    private val textField = R.id.sliderText
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_settings, container, false)
+        return inflater.inflate(R.layout.fragment_report, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val slider = requireView().findViewById<Slider>(R.id.slider)
-        val textView = requireView().findViewById<MaterialTextView>(R.id.sliderText)
-        slider.addOnChangeListener{  slider, value, fromUser ->
-            textView.text = "Slider Value: "+slider.value.toString()
-        }
+
     }
 
 }
