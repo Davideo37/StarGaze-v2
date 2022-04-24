@@ -3,11 +3,13 @@ package com.example.project2
 import android.Manifest
 import android.app.Activity
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.telecom.Call
 import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -18,7 +20,10 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.internal.ViewUtils.getContentView
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textview.MaterialTextView
+import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.main_activity.*
+import kotlinx.coroutines.test.withTestContext
 import okhttp3.Callback
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -59,7 +64,7 @@ class MainActivity : AppCompatActivity() {
             this.supportActionBar!!.hide()
         } catch (e: NullPointerException) {
         }
-        run(requestString)
+        fetchAPI(requestString)
         replaceFragment(homeFragment)
 
         bottomNavigationView.setOnItemSelectedListener { item ->
@@ -88,13 +93,14 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+
     private fun replaceFragment(fragment: Fragment) {
             val transaction = supportFragmentManager.beginTransaction()
             transaction.replace(R.id.fragment_container, fragment)
             transaction.commit()
     }
 
-    fun run(url: String) {
+    fun fetchAPI(url: String) {
         val request = Request.Builder()
             .url(url)
             .build()
@@ -103,10 +109,13 @@ class MainActivity : AppCompatActivity() {
             override fun onFailure(call: okhttp3.Call, e: IOException) {
                 Log.i("JSON fail", "Request failed: $e")
             }
+            @RequiresApi(Build.VERSION_CODES.P)
             override fun onResponse(call: okhttp3.Call, response: Response) {
                 val body = response.body()!!.string()
                 val json = JSONObject(body)
                 val loc = json.getJSONObject("location").getString("name")
+                this@MainActivity.runOnUiThread(java.lang.Runnable { ic_home.text = loc
+                    Log.i("Success", "Text updated")})
                 Log.i("JSON returned", loc )}
         })
     }
