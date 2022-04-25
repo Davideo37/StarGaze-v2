@@ -21,11 +21,11 @@ class ForecastFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        layoutManager = LinearLayoutManager(this.context)
-        recycler_view.layoutManager = layoutManager
-
-        adapter = RecyclerAdapter()
-        recycler_view.adapter = adapter
+//        layoutManager = LinearLayoutManager(this.context)
+//        recycler_view.layoutManager = layoutManager
+//
+//        adapter = RecyclerAdapter()
+//        recycler_view.adapter = adapter
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_forecast, container, false)
     }

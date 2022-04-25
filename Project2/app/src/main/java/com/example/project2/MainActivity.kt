@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
         }
 
     var location = "Wenham, MA"
-    val requestString = "http://api.weatherapi.com/v1/forecast.json?key=000164ffa1bd49d48e3172911222001&q=" +
+    var requestString = "http://api.weatherapi.com/v1/forecast.json?key=000164ffa1bd49d48e3172911222001&q=" +
     location +
     "&days=5&hour=20&raqi=no&alerts=no"
 
@@ -92,7 +92,12 @@ class MainActivity : AppCompatActivity() {
             .show()
     }
 
-
+    fun handleLocationSubmit(view: View) {
+        location = findViewById<TextInputEditText>(R.id.materialTextInputEditText).text.toString()
+        requestString = "http://api.weatherapi.com/v1/forecast.json?key=000164ffa1bd49d48e3172911222001&q=" +
+                location + "&days=5&hour=20&raqi=no&alerts=no"
+        fetchAPI(requestString)
+    }
 
     private fun replaceFragment(fragment: Fragment) {
             val transaction = supportFragmentManager.beginTransaction()
@@ -113,10 +118,12 @@ class MainActivity : AppCompatActivity() {
             override fun onResponse(call: okhttp3.Call, response: Response) {
                 val body = response.body()!!.string()
                 val json = JSONObject(body)
-                val loc = json.getJSONObject("location").getString("name")
-                this@MainActivity.runOnUiThread(java.lang.Runnable { ic_home.text = loc
+                val locName = json.getJSONObject("location").getString("name")
+                val locTemp = json.getJSONObject("current").getDouble("temp_f")
+                this@MainActivity.runOnUiThread(java.lang.Runnable { location_name.text = locName
+                    location_temp.text = "$locTemp °F"
                     Log.i("Success", "Text updated")})
-                Log.i("JSON returned", loc )}
+                Log.i("JSON returned", json.toString() )}
         })
     }
 
