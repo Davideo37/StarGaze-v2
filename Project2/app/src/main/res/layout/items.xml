@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    android:id="@+id/card_view">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="102dp"
+        android:background="#7194FA"
+        android:padding="8dp">
+
+        <ImageView
+            android:id="@+id/image_view"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_star"
+            android:translationX="250dp" />
+
+        <TextView
+            android:id="@+id/text_view1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/image_view"
+            android:text="Date: April 24th"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            android:translationX="-50dp" />
+
+        <TextView
+            android:id="@+id/text_view2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text_view1"
+            android:layout_toEndOf="@id/image_view"
+            android:text="Condition: Clear"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            android:translationX="-50dp" />
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
