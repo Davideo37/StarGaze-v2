@@ -46,6 +46,15 @@ class MainActivity : AppCompatActivity() {
         var locTemp = "TestTemp"
         var locWeath = "TestWeath"
         var locImage = "TestImage"
+        var forecastWeath1 = "Weather1Test"
+        var forecastWeath2 = "Weather2Test"
+        var forecastWeath3 = "Weather3Test"
+        var forecastDate1 = "Date1Test"
+        var forecastDate2 = "Date2Test"
+        var forecastDate3 = "Date3Test"
+        var forecastImage1 = "Image1Test"
+        var forecastImage2 = "Image2Test"
+        var forecastImage3 = "Image3Test"
     }
 
     private val requestPermissionLauncher =
@@ -63,7 +72,7 @@ class MainActivity : AppCompatActivity() {
     var requestString =
         "http://api.weatherapi.com/v1/forecast.json?key=000164ffa1bd49d48e3172911222001&q=" +
                 location +
-                "&days=5&hour=21&raqi=no&alerts=no"
+                "&days=5&hour=20&raqi=no&alerts=no"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -110,7 +119,7 @@ class MainActivity : AppCompatActivity() {
         } else {
             requestString =
                 "http://api.weatherapi.com/v1/forecast.json?key=000164ffa1bd49d48e3172911222001&q=" +
-                        location + "&days=5&hour=21&raqi=no&alerts=no"
+                        location + "&days=5&hour=20&raqi=no&alerts=no"
             fetchAPI(requestString)
         }
     }
@@ -140,39 +149,18 @@ class MainActivity : AppCompatActivity() {
                 val weather =
                     json.getJSONObject("current").getJSONObject("condition").getString("text")
                 val weather1 =
-                    json.getJSONObject("forecast").getJSONArray("forecastday").getJSONObject(0)
-                        .getJSONArray("hour").getJSONObject(0).getJSONObject("condition")
-                        .getString("text")
+                    json.getJSONObject("forecast").getJSONArray("forecastday").getJSONObject(0).getJSONObject("day").getJSONObject("condition").getString("text")
                 val weather2 =
-                    json.getJSONObject("forecast").getJSONArray("forecastday").getJSONObject(1)
-                        .getJSONArray("hour").getJSONObject(0).getJSONObject("condition")
-                        .getString("text")
+                    json.getJSONObject("forecast").getJSONArray("forecastday").getJSONObject(1).getJSONObject("day").getJSONObject("condition").getString("text")
                 val weather3 =
-                    json.getJSONObject("forecast").getJSONArray("forecastday").getJSONObject(2)
-                        .getJSONArray("hour").getJSONObject(0).getJSONObject("condition")
-                        .getString("text")
+                    json.getJSONObject("forecast").getJSONArray("forecastday").getJSONObject(2).getJSONObject("day").getJSONObject("condition").getString("text")
                 val dateString = json.getJSONObject("current").getString("last_updated")
-                val dateString1 =
-                    json.getJSONObject("forecast").getJSONArray("forecastday").getJSONObject(0)
-                        .getString("date")
-                val dateString2 =
-                    json.getJSONObject("forecast").getJSONArray("forecastday").getJSONObject(1)
-                        .getString("date")
-                val dateString3 =
-                    json.getJSONObject("forecast").getJSONArray("forecastday").getJSONObject(2)
-                        .getString("date")
-                val image1 =
-                    json.getJSONObject("forecast").getJSONArray("forecastday").getJSONObject(0)
-                        .getJSONArray("hour").getJSONObject(0).getJSONObject("condition")
-                        .getString("text")
-                val image2 =
-                    json.getJSONObject("forecast").getJSONArray("forecastday").getJSONObject(1)
-                        .getJSONArray("hour").getJSONObject(0).getJSONObject("condition")
-                        .getString("text")
-                val image3 =
-                    json.getJSONObject("forecast").getJSONArray("forecastday").getJSONObject(2)
-                        .getJSONArray("hour").getJSONObject(0).getJSONObject("condition")
-                        .getString("text")
+                val dateString1 = json.getJSONObject("forecast").getJSONArray("forecastday").getJSONObject(0).getString("date")
+                val dateString2 = json.getJSONObject("forecast").getJSONArray("forecastday").getJSONObject(1).getString("date")
+                val dateString3 = json.getJSONObject("forecast").getJSONArray("forecastday").getJSONObject(2).getString("date")
+                val image1 = json.getJSONObject("forecast").getJSONArray("forecastday").getJSONObject(0).getJSONObject("day").getJSONObject("condition").getString("icon")
+                val image2 = json.getJSONObject("forecast").getJSONArray("forecastday").getJSONObject(1).getJSONObject("day").getJSONObject("condition").getString("icon")
+                val image3 = json.getJSONObject("forecast").getJSONArray("forecastday").getJSONObject(2).getJSONObject("day").getJSONObject("condition").getString("icon")
                 val image =
                     json.getJSONObject("current").getJSONObject("condition").getString("icon")
                 this@MainActivity.runOnUiThread(java.lang.Runnable {
@@ -180,6 +168,9 @@ class MainActivity : AppCompatActivity() {
                     location_temp.text = temp
                     Log.i("Success", "Text updated")
                 })
+                forecastDate1 = dateString1
+                forecastDate2 = dateString2
+                forecastDate3 = dateString3
                 locName = name
                 locTemp = temp
                 locWeath = weather
@@ -187,10 +178,11 @@ class MainActivity : AppCompatActivity() {
                 forecastWeath1 = weather1
                 forecastWeath2 = weather2
                 forecastWeath3 = weather3
-                locDate = formatDate(dateString)
-                forecastDate1 = formatDate(dateString1)
-                forecastDate2 = formatDate(dateString2)
-                forecastDate3 = formatDate(dateString3)
+                val parsedDate = LocalDate.parse(dateString!!.split(" ")[0])
+                locDate = parsedDate.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM))
+                    .substringBefore(",")
+
+
                 forecastImage1 = image1
                 forecastImage2 = image2
                 forecastImage3 = image3
@@ -213,12 +205,6 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
-fun formatDate(date: String?): String {
-    var parsedDate = LocalDate.parse(date!!.split(" ")[0])
-    return parsedDate.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM))
-        .substringBefore(",")
-}
 
 fun View.showSnackbar(
     view: View,

@@ -50,7 +50,7 @@ class ReportFragment : Fragment() {
         val reportDate : MaterialTextView  = requireView().findViewById(R.id.report_date)
         name = MainActivity.locName
         temp = MainActivity.locTemp
-        weather = MainActivity.locWeath
+        weather = MainActivity.locWeath.toString()
         image = MainActivity.locImage
         date = MainActivity.locDate
         reportName.text = "$name"
