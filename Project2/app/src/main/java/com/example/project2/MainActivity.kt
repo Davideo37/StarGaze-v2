@@ -41,20 +41,27 @@ class MainActivity : AppCompatActivity() {
     private lateinit var json: JSONObject
 
     companion object {
+        var day1 = mutableMapOf(
+            "date" to "Date1",
+            "condition" to "Condition1",
+            "image" to "0",
+            "temp" to "Temp1"
+        )
+        var day2 = mutableMapOf(
+            "date" to "Date2",
+            "condition" to "Condition2",
+            "image" to "0",
+            "temp" to "Temp2"
+        )
+        var day3 = mutableMapOf(
+            "date" to "Date3",
+            "condition" to "Condition3",
+            "image" to "0",
+            "temp" to "Temp3"
+        )
+        val forecastData = arrayOf(day1, day2, day3)
+        var index = 0
         var locName = "TestName"
-        var locDate = "TestTime"
-        var locTemp = "TestTemp"
-        var locWeath = "TestWeath"
-        var locImage = "TestImage"
-        var forecastWeath1 = "Weather1Test"
-        var forecastWeath2 = "Weather2Test"
-        var forecastWeath3 = "Weather3Test"
-        var forecastDate1 = "Date1Test"
-        var forecastDate2 = "Date2Test"
-        var forecastDate3 = "Date3Test"
-        var forecastImage1 = "Image1Test"
-        var forecastImage2 = "Image2Test"
-        var forecastImage3 = "Image3Test"
     }
 
     private val requestPermissionLauncher =
@@ -100,6 +107,7 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
+
     }
 
     fun errorAlert(view: View) {
@@ -124,7 +132,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun replaceFragment(fragment: Fragment) {
+    fun replaceFragment(fragment: Fragment) {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.fragment_container, fragment)
         transaction.commit()
@@ -145,9 +153,21 @@ class MainActivity : AppCompatActivity() {
                 val body = response.body()!!.string()
                 json = JSONObject(body)
                 val name = json.getJSONObject("location").getString("name")
-                val temp = json.getJSONObject("current").getDouble("temp_f").toString() + " °F"
+
                 val weather =
                     json.getJSONObject("current").getJSONObject("condition").getString("text")
+                val temp1 =
+                    json.getJSONObject("forecast").getJSONArray("forecastday").getJSONObject(0)
+                        .getJSONArray("hour").getJSONObject(0).getDouble("temp_f")
+                        .toString() + " °F"
+                val temp2 =
+                    json.getJSONObject("forecast").getJSONArray("forecastday").getJSONObject(1)
+                        .getJSONArray("hour").getJSONObject(0).getDouble("temp_f")
+                        .toString() + " °F"
+                val temp3 =
+                    json.getJSONObject("forecast").getJSONArray("forecastday").getJSONObject(2)
+                        .getJSONArray("hour").getJSONObject(0).getDouble("temp_f")
+                        .toString() + " °F"
                 val weather1 =
                     json.getJSONObject("forecast").getJSONArray("forecastday").getJSONObject(0)
                         .getJSONArray("hour").getJSONObject(0).getJSONObject("condition")
@@ -160,7 +180,6 @@ class MainActivity : AppCompatActivity() {
                     json.getJSONObject("forecast").getJSONArray("forecastday").getJSONObject(2)
                         .getJSONArray("hour").getJSONObject(0).getJSONObject("condition")
                         .getString("text")
-                val dateString = json.getJSONObject("current").getString("last_updated")
                 val dateString1 =
                     json.getJSONObject("forecast").getJSONArray("forecastday").getJSONObject(0)
                         .getString("date")
@@ -170,50 +189,65 @@ class MainActivity : AppCompatActivity() {
                 val dateString3 =
                     json.getJSONObject("forecast").getJSONArray("forecastday").getJSONObject(2)
                         .getString("date")
-                val image1 =
-                    json.getJSONObject("forecast").getJSONArray("forecastday").getJSONObject(0)
-                        .getJSONArray("hour").getJSONObject(0).getJSONObject("condition")
-                        .getString("text")
-                val image2 =
-                    json.getJSONObject("forecast").getJSONArray("forecastday").getJSONObject(1)
-                        .getJSONArray("hour").getJSONObject(0).getJSONObject("condition")
-                        .getString("text")
-                val image3 =
-                    json.getJSONObject("forecast").getJSONArray("forecastday").getJSONObject(2)
-                        .getJSONArray("hour").getJSONObject(0).getJSONObject("condition")
-                        .getString("text")
-                val image =
-                    json.getJSONObject("current").getJSONObject("condition").getString("icon")
-                this@MainActivity.runOnUiThread(java.lang.Runnable {
-                    location_name.text = name
-                    location_temp.text = temp
-                    Log.i("Success", "Text updated")
-                })
-                locName = name
-                locTemp = temp
-                locWeath = weather
-                locImage = image
-                locDate = formatDate(dateString)
+                val image1 = chooseWeatherImage(weather1)
+                val image2 = chooseWeatherImage(weather2)
+                val image3 = chooseWeatherImage(weather3)
 
-                forecastWeath1 = weather1
-                forecastWeath2 = weather2
-                forecastWeath3 = weather3
-                forecastDate1 = formatDate(dateString1)
-                forecastDate2 = formatDate(dateString2)
-                forecastDate3 = formatDate(dateString3)
-                forecastImage1 = image1
-                forecastImage2 = image2
-                forecastImage3 = image3
+                locName = name
+
+                forecastData[0]["temp"] = temp1
+                forecastData[1]["temp"] = temp2
+                forecastData[2]["temp"] = temp3
+                forecastData[0]["condition"] = weather1
+                forecastData[1]["condition"] = weather2
+                forecastData[2]["condition"] = weather3
+                forecastData[0]["date"] = formatDate(dateString1)
+                forecastData[1]["date"] = formatDate(dateString2)
+                forecastData[2]["date"] = formatDate(dateString3)
+                forecastData[0]["image"] = image1.toString()
+                forecastData[1]["image"] = image2.toString()
+                forecastData[2]["image"] = image3.toString()
 
                 Log.i("JSON returned", json.toString())
+                Log.i("Map Data", forecastData[0]["temp"]!!)
             }
         })
     }
 
 
-
 }
 
+/* Function to determine which weather image to display based on the conditions
+ *
+ */
+fun chooseWeatherImage(weather: String): Int {
+    if (weather == "Clear") {
+        return R.drawable.clear
+    } else if (weather == "Partly Cloudy") {
+        return R.drawable.partlycloudy
+    } else if (weather == "Overcast") {
+        return R.drawable.overcast
+    } else if (weather.contains("thunder", true)) {
+        if (weather.contains("rain", true) || weather.contains("snow", true)) {
+            return R.drawable.thunderstorm_rain
+        } else {
+            return R.drawable.thunderstorm
+        }
+    } else if (weather.contains("rain", true)) {
+        return R.drawable.rainy
+    } else if (weather == "Sunny") {
+        return R.drawable.sunny
+    } else if (weather.contains("snow", true)) {
+        return R.drawable.snow
+    } else if (weather.contains("fog", true)) {
+        return R.drawable.overcast // Replace with fog
+    } else if (weather.contains("sleet", true)) {
+        return R.drawable.sleet
+    } else if (weather.contains("hail", true)) {
+        return R.drawable.hail
+    }
+    return R.drawable.partlycloudy // Default return
+}
 
 @RequiresApi(Build.VERSION_CODES.O)
 fun formatDate(date: String?): String {
@@ -222,19 +256,3 @@ fun formatDate(date: String?): String {
         .substringBefore(",")
 }
 
-fun View.showSnackbar(
-    view: View,
-    msg: String,
-    length: Int,
-    actionMessage: CharSequence?,
-    action: (View) -> Unit
-) {
-    val snackbar = Snackbar.make(view, msg, length)
-    if (actionMessage != null) {
-        snackbar.setAction(actionMessage) {
-            action(this)
-        }.show()
-    } else {
-        snackbar.show()
-    }
-}

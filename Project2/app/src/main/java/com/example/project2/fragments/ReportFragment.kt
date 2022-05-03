@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import com.example.project2.MainActivity
@@ -48,15 +49,18 @@ class ReportFragment : Fragment() {
         val reportCond : MaterialTextView  = requireView().findViewById(R.id.report_cond)
         val reportTemp : MaterialTextView  = requireView().findViewById(R.id.report_temp)
         val reportDate : MaterialTextView  = requireView().findViewById(R.id.report_date)
+        val reportImage : ImageView = requireView().findViewById(R.id.report_image)
+        val i = MainActivity.index
         name = MainActivity.locName
-        temp = MainActivity.locTemp
-        weather = MainActivity.locWeath.toString()
-        image = MainActivity.locImage
-        date = MainActivity.locDate
+        temp = MainActivity.forecastData[i]["temp"]
+        weather = MainActivity.forecastData[i]["condition"]
+        image = MainActivity.forecastData[i]["image"]
+        date = MainActivity.forecastData[i]["date"]
         reportName.text = "$name"
         reportTemp.text = "$temp"
         reportCond.text = "$weather"
         reportDate.text = "$date"
+        reportImage.setImageResource(image!!.toInt())
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
