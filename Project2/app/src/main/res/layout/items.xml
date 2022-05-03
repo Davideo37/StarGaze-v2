@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/image_view"
-            android:text="Date: April 24th"
+            android:text="Date: April 25th"
             android:textColor="@color/black"
             android:textSize="30sp"
             android:translationX="-50dp" />

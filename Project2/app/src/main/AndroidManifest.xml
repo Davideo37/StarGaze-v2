@@ -12,9 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Project2"
         android:usesCleartextTraffic="true">
-        <activity
-            android:name=".DetailsActivity"
-            android:exported="false" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true">

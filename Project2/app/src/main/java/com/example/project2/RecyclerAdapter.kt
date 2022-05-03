@@ -9,9 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 
 class RecyclerAdapter: RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
 
-    private var dates = arrayOf("4/24", "4/25", "4/26")
+    private var dates = arrayOf(MainActivity.forecastDate1, MainActivity.forecastDate2, MainActivity.forecastDate3)
 
-    private var descs = arrayOf("Clear", "Partly Cloudy", "Rainy")
+    private var descs = arrayOf(MainActivity.forecastWeath1, MainActivity.forecastWeath2, MainActivity.forecastWeath3)
 
     private var images = intArrayOf(R.drawable.ic_star, R.drawable.ic_star, R.drawable.ic_star)
 

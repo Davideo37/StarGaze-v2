@@ -40,7 +40,7 @@
         app:layout_constraintVertical_bias="0.089" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/report_title2"
+        android:id="@+id/report_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="April 24th"
@@ -54,10 +54,10 @@
         app:layout_constraintVertical_bias="0.417" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/report_title3"
+        android:id="@+id/report_desc"
         android:layout_width="281dp"
         android:layout_height="76dp"
-        android:text="Tonight is a great night to"
+        android:text="Tonight is a great night to stargaze!"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -67,22 +67,10 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.706" />
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/report_title6"
-        android:layout_width="256dp"
-        android:layout_height="74dp"
-        android:text="stargaze!"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.935"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.754" />
+
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/report_title4"
+        android:id="@+id/report_cond"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Condition: Clear"
@@ -96,7 +84,7 @@
         app:layout_constraintVertical_bias="0.59" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/report_title5"
+        android:id="@+id/report_temp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Temp: 70°F"
@@ -110,7 +98,7 @@
         app:layout_constraintVertical_bias="0.499" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/report_name"
         android:layout_width="271dp"
         android:layout_height="80dp"
         android:text="Location: Boston MA"
