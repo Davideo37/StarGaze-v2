@@ -50,6 +50,7 @@ class ReportFragment : Fragment() {
         val reportTemp : MaterialTextView  = requireView().findViewById(R.id.report_temp)
         val reportDate : MaterialTextView  = requireView().findViewById(R.id.report_date)
         val reportImage : ImageView = requireView().findViewById(R.id.report_image)
+        val reportDesc : MaterialTextView = requireView().findViewById(R.id.report_desc)
         val i = MainActivity.index
         name = MainActivity.locName
         temp = MainActivity.forecastData[i]["temp"]
@@ -61,6 +62,16 @@ class ReportFragment : Fragment() {
         reportCond.text = "$weather"
         reportDate.text = "$date"
         reportImage.setImageResource(image!!.toInt())
+        val tp = temp?.dropLast(2)
+        val tpnum = tp?.toDouble()
+        if (tpnum != null) {
+            if (tpnum > 20 && weather == "Clear") {
+                reportDesc.text = "This night is a great night to stargaze!"
+            }
+            else {
+                reportDesc.text = "This night is a bad night to stargaze"
+            }
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
