@@ -1,5 +1,6 @@
 package com.example.stargaze
 
+import android.app.Activity
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -100,7 +101,7 @@ class MainActivity : AppCompatActivity() {
     fun errorAlert(view: View) {
         text = findViewById<TextInputEditText>(R.id.materialTextInputEditText).text.toString()
         MaterialAlertDialogBuilder(view.context)
-            .setTitle("Error in location search")
+            .setTitle("Error invalid location")
             .setMessage("You entered: $text")
             .setPositiveButton("Ok") { dialog, which -> {} }
             .show()
@@ -142,70 +143,81 @@ class MainActivity : AppCompatActivity() {
             @RequiresApi(Build.VERSION_CODES.P)
             override fun onResponse(call: okhttp3.Call, response: Response) {
                 val body = response.body()!!.string()
-                json = JSONObject(body)
-                val name = json.getJSONObject("location")
-                    .getString("name") + ", " + json.getJSONObject("location").getString("region")
+                if (!body.contains("error", true)) {
+                    Log.i("JSON returned", body.toString())
 
-                val weather =
-                    json.getJSONObject("current").getJSONObject("condition").getString("text")
-                val temp1 =
-                    json.getJSONObject("forecast").getJSONArray("forecastday").getJSONObject(0)
-                        .getJSONArray("hour").getJSONObject(0).getDouble("temp_f")
-                        .toString() + " °F"
-                val temp2 =
-                    json.getJSONObject("forecast").getJSONArray("forecastday").getJSONObject(1)
-                        .getJSONArray("hour").getJSONObject(0).getDouble("temp_f")
-                        .toString() + " °F"
-                val temp3 =
-                    json.getJSONObject("forecast").getJSONArray("forecastday").getJSONObject(2)
-                        .getJSONArray("hour").getJSONObject(0).getDouble("temp_f")
-                        .toString() + " °F"
-                val weather1 =
-                    json.getJSONObject("forecast").getJSONArray("forecastday").getJSONObject(0)
-                        .getJSONArray("hour").getJSONObject(0).getJSONObject("condition")
-                        .getString("text")
-                val weather2 =
-                    json.getJSONObject("forecast").getJSONArray("forecastday").getJSONObject(1)
-                        .getJSONArray("hour").getJSONObject(0).getJSONObject("condition")
-                        .getString("text")
-                val weather3 =
-                    json.getJSONObject("forecast").getJSONArray("forecastday").getJSONObject(2)
-                        .getJSONArray("hour").getJSONObject(0).getJSONObject("condition")
-                        .getString("text")
-                val dateString1 =
-                    json.getJSONObject("forecast").getJSONArray("forecastday").getJSONObject(0)
-                        .getString("date")
-                val dateString2 =
-                    json.getJSONObject("forecast").getJSONArray("forecastday").getJSONObject(1)
-                        .getString("date")
-                val dateString3 =
-                    json.getJSONObject("forecast").getJSONArray("forecastday").getJSONObject(2)
-                        .getString("date")
-                val image1 = chooseWeatherImage(weather1)
-                val image2 = chooseWeatherImage(weather2)
-                val image3 = chooseWeatherImage(weather3)
+                    json = JSONObject(body)
 
-                locName = name
+                    val name = json.getJSONObject("location")
+                        .getString("name") + ", " + json.getJSONObject("location")
+                        .getString("region")
 
-                forecastData[0]["temp"] = temp1
-                forecastData[1]["temp"] = temp2
-                forecastData[2]["temp"] = temp3
-                forecastData[0]["condition"] = weather1
-                forecastData[1]["condition"] = weather2
-                forecastData[2]["condition"] = weather3
-                forecastData[0]["date"] = formatDate(dateString1)
-                forecastData[1]["date"] = formatDate(dateString2)
-                forecastData[2]["date"] = formatDate(dateString3)
-                forecastData[0]["image"] = image1.toString()
-                forecastData[1]["image"] = image2.toString()
-                forecastData[2]["image"] = image3.toString()
+                    val weather =
+                        json.getJSONObject("current").getJSONObject("condition").getString("text")
+                    val temp1 =
+                        json.getJSONObject("forecast").getJSONArray("forecastday").getJSONObject(0)
+                            .getJSONArray("hour").getJSONObject(0).getDouble("temp_f")
+                            .toString() + " °F"
+                    val temp2 =
+                        json.getJSONObject("forecast").getJSONArray("forecastday").getJSONObject(1)
+                            .getJSONArray("hour").getJSONObject(0).getDouble("temp_f")
+                            .toString() + " °F"
+                    val temp3 =
+                        json.getJSONObject("forecast").getJSONArray("forecastday").getJSONObject(2)
+                            .getJSONArray("hour").getJSONObject(0).getDouble("temp_f")
+                            .toString() + " °F"
+                    val weather1 =
+                        json.getJSONObject("forecast").getJSONArray("forecastday").getJSONObject(0)
+                            .getJSONArray("hour").getJSONObject(0).getJSONObject("condition")
+                            .getString("text")
+                    val weather2 =
+                        json.getJSONObject("forecast").getJSONArray("forecastday").getJSONObject(1)
+                            .getJSONArray("hour").getJSONObject(0).getJSONObject("condition")
+                            .getString("text")
+                    val weather3 =
+                        json.getJSONObject("forecast").getJSONArray("forecastday").getJSONObject(2)
+                            .getJSONArray("hour").getJSONObject(0).getJSONObject("condition")
+                            .getString("text")
+                    val dateString1 =
+                        json.getJSONObject("forecast").getJSONArray("forecastday").getJSONObject(0)
+                            .getString("date")
+                    val dateString2 =
+                        json.getJSONObject("forecast").getJSONArray("forecastday").getJSONObject(1)
+                            .getString("date")
+                    val dateString3 =
+                        json.getJSONObject("forecast").getJSONArray("forecastday").getJSONObject(2)
+                            .getString("date")
+                    val image1 = chooseWeatherImage(weather1)
+                    val image2 = chooseWeatherImage(weather2)
+                    val image3 = chooseWeatherImage(weather3)
 
-                Log.i("JSON returned", json.toString())
-                Log.i("Map Data", forecastData[0]["temp"]!!)
-                if (!new) {
-                    replaceFragment(forecastFragment)
+                    locName = name
+
+                    forecastData[0]["temp"] = temp1
+                    forecastData[1]["temp"] = temp2
+                    forecastData[2]["temp"] = temp3
+                    forecastData[0]["condition"] = weather1
+                    forecastData[1]["condition"] = weather2
+                    forecastData[2]["condition"] = weather3
+                    forecastData[0]["date"] = formatDate(dateString1)
+                    forecastData[1]["date"] = formatDate(dateString2)
+                    forecastData[2]["date"] = formatDate(dateString3)
+                    forecastData[0]["image"] = image1.toString()
+                    forecastData[1]["image"] = image2.toString()
+                    forecastData[2]["image"] = image3.toString()
+
+
+                    Log.i("Map Data", forecastData[0]["temp"]!!)
+                    if (!new) {
+                        replaceFragment(forecastFragment)
+                    }
+                    new = false
+                } else {
+                    this@MainActivity.runOnUiThread(java.lang.Runnable {
+                        errorAlert(findViewById(R.id.home))
+                    })
+
                 }
-                new = false
             }
         })
     }
