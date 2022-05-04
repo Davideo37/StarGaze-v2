@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Stargaze 2.0</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="content_description_end_icon">Location icon</string>
+    <string name="location_search_helper_text">Enter a location</string>
+    <string name="location_search_placeholder_text">e.g. Boston, MA</string>
+    <string name="permission_granted">Internet permission granted!</string>
+    <string name="permission_required">Internet permission requested</string>
+    <string name="ok">Ok</string>
+    <string name="forecast">Forecast</string>
+    <string name="stargaze_positive">This night is a great night to stargaze!</string>
+    <string name="stargaze_negative">This night is not a good night to stargaze</string>
+    <string name="app_welcome">Welcome to</string>
+</resources>
