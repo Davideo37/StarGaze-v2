@@ -55,10 +55,20 @@ class ReportFragment : Fragment() {
         val tp = temp?.dropLast(2)?.toDouble()
 
         if (tp != null) {
-            if (tp > 20 && (weather == "Clear" || weather == "Sunny")) {
-                reportDesc.text = getString(R.string.stargaze_positive)
+            if (tp > 20 ) {
+                if  (weather == "Clear" || weather == "Sunny") {
+                    reportDesc.text = getString(R.string.stargaze_positive)
+                } else if (weather == "Partly cloudy"){
+                    reportDesc.text = getString(R.string.stargaze_neutral)
+                } else {
+                    reportDesc.text = getString(R.string.stargaze_negative)
+                }
             } else {
-                reportDesc.text = getString(R.string.stargaze_negative)
+                if (weather == "Clear" || weather == "Sunny") {
+                    reportDesc.text = getString(R.string.stargaze_neutral)
+                } else {
+                    reportDesc.text = getString(R.string.stargaze_negative)
+                }
             }
         }
     }

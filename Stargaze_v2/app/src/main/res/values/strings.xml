@@ -11,4 +11,5 @@
     <string name="stargaze_positive">This night is a great night to stargaze!</string>
     <string name="stargaze_negative">This night is not a good night to stargaze</string>
     <string name="app_welcome">Welcome to</string>
+    <string name="stargaze_neutral">This night is an ok night to stargaze.</string>
 </resources>
