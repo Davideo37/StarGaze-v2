@@ -231,7 +231,7 @@ class MainActivity : AppCompatActivity() {
 fun chooseWeatherImage(weather: String): Int {
     if (weather == "Clear") {
         return R.drawable.clear
-    } else if (weather == "Partly Cloudy") {
+    } else if (weather == "Partly cloudy") {
         return R.drawable.partlycloudy
     } else if (weather == "Overcast") {
         return R.drawable.overcast
